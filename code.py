@@ -4,9 +4,10 @@ import os
 import sqlite3
 import time
 from web import form
-activer = activer()
+
 # templete floder
 render = web.template.render('templates/')
+
 # url tables
 urls = ('/', 'index',
         '/manualcontroller', 'manualcontroller'
