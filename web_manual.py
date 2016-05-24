@@ -76,8 +76,8 @@ class sqldb:
             self.conn.commit()
 
 
-                
+web.webapi.internalerror = web.debugger                
 
 if __name__ == '__main__':
-    app = web.application(urls, globals())
+    app = web.application(urls, globals(),web.reload)
     app.run()
