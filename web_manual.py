@@ -34,12 +34,12 @@ class manualcontroller:
                 execute("servor1",i.servor1)
         if i.led1 != "":    
             if i.led1 !="":
-                activer("led1",i.led1)
+                execute("led1",i.led1)
         ''' 
         db1 = db()
         print db1.select("sensors",1 )
-        return web.seeother('/')
         '''
+        return web.seeother('/')
 
 class db:
     def __init__(self):
