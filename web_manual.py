@@ -3,7 +3,7 @@ import web
 import os
 import sqlite3
 import time
-import actuaotrModule
+from actuatorModule import execute
 from web import form
 # templete floder
 render = web.template.render('templates/')
@@ -53,7 +53,6 @@ class db:
     def select(self,table,index):
         i = (table,index)
         sql = 'select * from %s where id = %d'%(table,index)
-        print sql
         self.db.cu.execute(sql)
         rs = self.db.cu.fetchall()
         self.db.conn.commit()
