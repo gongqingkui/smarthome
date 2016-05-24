@@ -18,9 +18,6 @@ class index:
     def GET(self):
         return render.index()
 
-def activer(name,value):
-    print name,value
-    return 
 class manualcontroller:
 
     def GET(self):
@@ -29,24 +26,35 @@ class manualcontroller:
     def POST(self):
         i = web.input()
         print i.switcher1, i.servor1, i.led1
-        if i.switcher1 == "1" or i.switcher1 == "0" :
-            activer("switcher1",i.switcher1)
-            
-        if int(i.servor1)>=0 and int(i.servor1) <=180:
-            activer("servor1",i.servor1)
-            
-        if i.led1 !="":
-            activer("led1",i.led1)
-        '''
-        db = sqldb()
-        db.cu.execute('')
-        rs = db.cu.fetchall()
-        for r in rs:
-            print r[0]
-        db.conn.commit()
-        '''
+        if i.switcher1 != "":
+            if i.switcher1 == "1" or i.switcher1 == "0" :
+                activer("switcher1",i.switcher1)
+        if i.servor1 != "":
+            if int(i.servor1)>=0 and int(i.servor1) <=180:
+                activer("servor1",i.servor1)
+        if i.led1 != "":    
+            if i.led1 !="":
+                activer("led1",i.led1)
+        
+        db1 = db()
+        print db1.select("msgs", 3)
         return web.seeother('/')
-
+class db:
+    def __init__(self):
+        self.db = sqldb()
+    def insert(self,table,values):
+        return 
+    def delete(self,table,id):
+        return 
+    def update(self,table,id,values):
+        return 
+    def select(self,table,id):
+        self.db.cu.execute('select * from ? where id = ?',('msgs',3))
+        rs = self.db.cu.fetchall()
+        self.db.conn.commit()
+        return rs
+    
+    
 class sqldb:
 
     def __init__(self):
@@ -63,6 +71,15 @@ class sqldb:
                 "insert into msgs values(1,'gong','2016-05-16 16:36:00','hello gong')")
             self.conn.commit()
 
+
+def activer(name,value):
+    print name,value
+    serialSend(name,value)
+    return 
+def serialSend(name,value):
+    #serial port init
+    #serial send name,value
+    return 
                 
 
 if __name__ == '__main__':
