@@ -3,8 +3,8 @@ import web
 import os
 import sqlite3
 import time
+import actuaotr
 from web import form
-
 # templete floder
 render = web.template.render('templates/')
 
@@ -35,21 +35,26 @@ class manualcontroller:
         if i.led1 != "":    
             if i.led1 !="":
                 activer("led1",i.led1)
-        
+        ''' 
         db1 = db()
-        print db1.select("msgs", 3)
+        print db1.select("sensors",1 )
         return web.seeother('/')
+        '''
+
 class db:
     def __init__(self):
         self.db = sqldb()
     def insert(self,table,values):
         return 
-    def delete(self,table,id):
+    def delete(self,table,index):
         return 
-    def update(self,table,id,values):
+    def update(self,table,index,values):
         return 
-    def select(self,table,id):
-        self.db.cu.execute('select * from ? where id = ?',('msgs',3))
+    def select(self,table,index):
+        i = (table,index)
+        sql = 'select * from %s where id = %d'%(table,index)
+        print sql
+        self.db.cu.execute(sql)
         rs = self.db.cu.fetchall()
         self.db.conn.commit()
         return rs
@@ -66,20 +71,12 @@ class sqldb:
             self.conn = sqlite3.connect(self.db)
             self.cu = self.conn.cursor()
             self.cu.execute(
-                'create table msgs(id integer primary key,name text,date text,content text)')
+                'create table sensors(id integer primary key autoincrement,date text,value text)')
             self.cu.execute(
-                "insert into msgs values(1,'gong','2016-05-16 16:36:00','hello gong')")
+                'create tableactuators(id integer primary key autoincrement,date text,value text)')
             self.conn.commit()
 
 
-def activer(name,value):
-    print name,value
-    serialSend(name,value)
-    return 
-def serialSend(name,value):
-    #serial port init
-    #serial send name,value
-    return 
                 
 
 if __name__ == '__main__':
