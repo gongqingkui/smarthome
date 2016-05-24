@@ -1,5 +1,5 @@
 from sensorModule import sensor
-import actuatorModule
+from actuatorModule import execute
 
 def main():
     #while 1:

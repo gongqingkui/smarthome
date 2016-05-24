@@ -28,10 +28,10 @@ class manualcontroller:
         print i.switcher1, i.servor1, i.led1
         if i.switcher1 != "":
             if i.switcher1 == "1" or i.switcher1 == "0" :
-                activer("switcher1",i.switcher1)
+                execute("switcher1",i.switcher1)
         if i.servor1 != "":
             if int(i.servor1)>=0 and int(i.servor1) <=180:
-                activer("servor1",i.servor1)
+                execute("servor1",i.servor1)
         if i.led1 != "":    
             if i.led1 !="":
                 activer("led1",i.led1)
