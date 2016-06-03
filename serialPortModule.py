@@ -3,6 +3,7 @@ def serialSend(name,value):
     serialSend("SerialSend",value,"to",name)
     return 
 
+
 def serialInit():  
     import serial
     t = serial.Serial('/dev/ttyACM0',9600)
