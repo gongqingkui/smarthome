@@ -34,12 +34,10 @@ class manualcontroller:
                 execute("servor1",i.servor1)
         if i.led1 != "":    
             if i.led1 !="":
-                activer("led1",i.led1)
-        ''' 
+                execute("led1",i.led1)
         db1 = db()
         print db1.select("sensors",1 )
         return web.seeother('/')
-        '''
 
 class db:
     def __init__(self):
@@ -72,12 +70,14 @@ class sqldb:
             self.cu.execute(
                 'create table sensors(id integer primary key autoincrement,date text,value text)')
             self.cu.execute(
-                'create tableactuators(id integer primary key autoincrement,date text,value text)')
+                'insert into sensors values(null,\'2016-1-1 12:00:00\',\'32\')')
+            self.cu.execute(
+                'create table actuators(id integer primary key autoincrement,date text,value text)')
+            self.cu.execute(
+                'insert into actuators values(null,\'2016-1-1 12:00:02\',\'open AC ato 26\')')
             self.conn.commit()
 
 
-web.webapi.internalerror = web.debugger                
-
 if __name__ == '__main__':
-    app = web.application(urls, globals(),web.reload)
+    app = web.application(urls, globals())
     app.run()
