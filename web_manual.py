@@ -3,6 +3,7 @@ import web
 import os
 import sqlite3
 import time
+import serial
 from actuatorModule import execute
 from web import form
 # templete floder
@@ -28,13 +29,16 @@ class manualcontroller:
         print i.switcher1, i.servor1, i.led1
         if i.switcher1 != "":
             if i.switcher1 == "1" or i.switcher1 == "0" :
-                execute("switcher1",i.switcher1)
+                #execute(t,"b",i.switcher1)
+                execute("b",i.switcher1)
         if i.servor1 != "":
             if int(i.servor1)>=0 and int(i.servor1) <=180:
-                execute("servor1",i.servor1)
+                #execute(t,"d",i.servor1)
+                execute("d",i.servor1)
         if i.led1 != "":    
             if i.led1 !="":
-                execute("led1",i.led1)
+                #execute(t,"s",i.led1)
+                execute("s",i.led1)
         db1 = db()
         print db1.select("sensors",1 )
         return web.seeother('/')
