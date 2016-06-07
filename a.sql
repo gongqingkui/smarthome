@@ -1,0 +1,10 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE sensors(id integer primary key autoincrement,date text,value text);
+INSERT INTO "sensors" VALUES(1,'2016-1-1 12:00:00','32');
+CREATE TABLE actuators(id integer primary key autoincrement,date text,value text);
+INSERT INTO "actuators" VALUES(1,'2016-1-1 12:00:02','open AC ato 26');
+DELETE FROM sqlite_sequence;
+INSERT INTO "sqlite_sequence" VALUES('sensors',1);
+INSERT INTO "sqlite_sequence" VALUES('actuators',1);
+COMMIT;
