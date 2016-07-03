@@ -1,10 +1,16 @@
 import serial
+from time import sleep
 #def serialSend(t,str):
 def serialSend(str):
     #print  t.portstr
     t = serial.Serial('/dev/ttyACM0',9600)
-    print "SerialSend:",str
-    n = t.write(str)
+    with t:
+        t.setDTR(False)
+        sleep(1)
+        t.flushInput()
+        t.setDTR(True)
+        print "SerialSend:",str
+        n = t.write(str)
     t.close()
     return n
 
