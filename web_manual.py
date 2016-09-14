@@ -27,18 +27,15 @@ class manualcontroller:
     def POST(self):
         i = web.input()
         print i.switcher1, i.servor1, i.led1
-        if i.switcher1 != "":
-            if i.switcher1 == "1" or i.switcher1 == "0" :
-                #execute(t,"b",i.switcher1)
-                execute("b",i.switcher1)
         if i.servor1 != "":
             if int(i.servor1)>=0 and int(i.servor1) <=180:
-                #execute(t,"d",i.servor1)
                 execute("d",i.servor1)
-        if i.led1 != "":    
+        elif i.led1 != "":    
             if i.led1 !="":
-                #execute(t,"s",i.led1)
                 execute("s",i.led1)
+        elif i.switcher1 != "":
+            if i.switcher1 == "1" or i.switcher1 == "0" :
+                execute("b",i.switcher1)
         db1 = db()
         print db1.select("sensors",1 )
         return web.seeother('/')
