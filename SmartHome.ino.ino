@@ -17,7 +17,7 @@
   文字面是背面
   窗口面正面，左至右为+5v data GND
   数据引脚9
-  Servo引脚 红+5v 棕GND 黄DATA
+  Servo引脚 红+  5v 棕GND 黄DATA
   数据引脚10
 */
 
@@ -28,6 +28,7 @@
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 dht11 DHT11;
 Servo servo1;
+Servo servo2;
 
 #define DHT11PIN 9
 String comdata = "";
@@ -41,6 +42,7 @@ void setup()
 
   pinMode(13, OUTPUT);
   servo1.attach(10);
+  servo2.attach(8);
   Serial.println(DHT11LIB_VERSION);
   lcd.begin(16, 2);
   lcd.print("SmartHome");
@@ -89,11 +91,16 @@ void loop()
   lcd.setCursor(10, 0);
   lcd.print(millis() / 1000);
   lcd.setCursor(0, 1);
+  lcd.print("T:");
+  lcd.setCursor(2,1);
   lcd.print(temperature);
   lcd.setCursor(10, 1);
+  lcd.print("H:");
+  lcd.setCursor(12,1);
   lcd.print(humidity);
 
-  servo1.write(millis() / 1000);
+  servo1.write((millis() / 1000)%180);
+  servo2.write(180-((millis()/1000)%180));
   delay(2000);
 }
 
@@ -102,15 +109,13 @@ void splitString(char *data)
   Serial.print("Data entered:");
   Serial.println(data);
   char *parameter;
-  parameter = strtok(data, " ,");   //string token，将data按照空格或者,进行分割并截取
-  Serial.print("***");
-  Serial.println(parameter);
+  parameter = strtok(data, " ,");   //string token，将data按照空格或者,进行分割并截取 只要最前一个字串
   while (parameter != NULL)
   {
     setLED(parameter);
-    parameter = strtok(NULL, " ,");   //string token，再次分割并截取，直至截取后的字符为空
+    parameter = strtok(NULL, " ,");   //string token，再次分割并截取，直至截取后的字符为空,数据抛弃，不用管
     Serial.print("---");
-    Serial.println(parameter);
+    //Serial.println(parameter);
   }
   for (int x = 0; x < 16; x++)    //清空缓冲
   {
@@ -119,6 +124,12 @@ void splitString(char *data)
   Serial.flush();
 }
 
+/*
+ * 根据首字母b d s 来给具体安排反应
+ * b 0 1 闪LED灯
+ * d 数字 设servo角度
+ * s string 用液晶显示
+ */
 void setLED(char *data)
 {
   if ((data[0] == 'b') || (data[0] == 'B'))
@@ -127,7 +138,7 @@ void setLED(char *data)
     Ans = constrain(Ans, 0, 1);     //限制在0~255范围内
     if (Ans == 1) {
       digitalWrite(13, HIGH);
-      delay(500);
+      delay(2500);
       digitalWrite(13, LOW);
     }
     Serial.print("binary is set to :");
