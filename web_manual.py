@@ -11,13 +11,24 @@ render = web.template.render('templates/')
 
 # url tables
 urls = ('/', 'index',
-        '/manualcontroller', 'manualcontroller'
+        '/manualcontroller', 'manualcontroller',
+        '/results', 'results'
         )
 
 
 class index:
+
     def GET(self):
         return render.index()
+
+
+class results:
+
+    def GET(self):
+        db1 = db()
+        rs = db1.execute('select * from sensors')
+        return render.results(rs)
+
 
 class manualcontroller:
 
@@ -36,8 +47,6 @@ class manualcontroller:
         elif i.switcher1 != "":
             if i.switcher1 == "1" or i.switcher1 == "0" :
                 execute("b",i.switcher1)
-        db1 = db()
-        print db1.select("sensors",1 )
         return web.seeother('/')
 
 class db:
@@ -52,6 +61,11 @@ class db:
     def select(self,table,index):
         i = (table,index)
         sql = 'select * from %s where id = %d'%(table,index)
+        self.db.cu.execute(sql)
+        rs = self.db.cu.fetchall()
+        self.db.conn.commit()
+        return rs
+    def execute(self,sql):
         self.db.cu.execute(sql)
         rs = self.db.cu.fetchall()
         self.db.conn.commit()
