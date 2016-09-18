@@ -1,7 +1,9 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 CREATE TABLE sensors(id integer primary key autoincrement,date text,value text);
-CREATE TABLE hcho(id integer primary key autoincrement,date text,value text);
+create table humidity(id integer primary key autoincrement,date text,value text);
+create table tempperature(id integer primary key autoincrement,date text,value text);
+create table hcho(id integer primary key autoincrement,date text,value text);
 INSERT INTO "sensors" VALUES(1,'2016-1-1 12:00:00','32');
 CREATE TABLE actuators(id integer primary key autoincrement,date text,value text);
 INSERT INTO "actuators" VALUES(1,'2016-1-1 12:00:02','open AC ato 26');
