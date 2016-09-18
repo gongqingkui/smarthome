@@ -13,10 +13,12 @@
   14       2            DB7高4位三态、 双向数据总线 7位（最高位）（也是busy flag）
   15                   BLA背光电源正极
   16                   BLK背光 电源负极
+  
   DHT11引脚
   文字面是背面
   窗口面正面，左至右为+5v data GND
   数据引脚9
+  
   Servo引脚 红+  5v 棕GND 黄DATA
   数据引脚10
 */
@@ -85,7 +87,9 @@ void loop()
   }
   humidity = (float)DHT11.humidity;
   temperature = (float)DHT11.temperature;
+  Serial.print("H:");
   Serial.println(humidity, 2);
+  Serial.print("T:");
   Serial.println(temperature, 2);
 
   lcd.setCursor(10, 0);
