@@ -12,22 +12,28 @@ render = web.template.render('templates/')
 # url tables
 urls = ('/', 'index',
         '/manualcontroller', 'manualcontroller',
-        '/results', 'results'
+        '/temperature', 'temperature',
+        '/humidity', 'humidity'
         )
 
 
 class index:
-
     def GET(self):
         return render.index()
 
-
-class results:
-
+ 
+class temperature:
     def GET(self):
         db1 = db()
-        rs = db1.execute('select * from sensors')
-        return render.results(rs)
+        rs = db1.execute('select * from temperature order by id desc limit 20')
+        return render.temperature(rs)
+
+
+class humidity:
+    def GET(self):
+        db1 = db()
+        rs = db1.execute('select * from humidity order by id desc limit 20')
+        return render.humidity(rs)
 
 
 class manualcontroller:
