@@ -21,7 +21,10 @@ def toYeeLink(sensorId,value):
     r = urllib2.Request(sensorURL,jdata)
     r.add_header('U-ApiKey',apikey)
 
-    resp = urllib2.urlopen(r)
+    try:
+        resp = urllib2.urlopen(r)
+    except Exception,e:
+        print Exception,":",e
     time.sleep(30)
 
 def serialRead():
