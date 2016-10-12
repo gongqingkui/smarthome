@@ -13,7 +13,8 @@ render = web.template.render('templates/')
 urls = ('/', 'index',
         '/manualcontroller', 'manualcontroller',
         '/temperature', 'temperature',
-        '/humidity', 'humidity'
+        '/humidity', 'humidity',
+        '/wiki', 'wiki'
         )
 
 
@@ -54,6 +55,10 @@ class manualcontroller:
             if i.switcher1 == "1" or i.switcher1 == "0" :
                 execute("b",i.switcher1)
         return web.seeother('/')
+
+class wiki:
+    def GET(self):
+        return render.wiki()
 
 class db:
     def __init__(self):
