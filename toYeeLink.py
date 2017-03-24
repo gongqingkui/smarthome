@@ -28,7 +28,7 @@ def toYeeLink(sensorId,value):
     time.sleep(30)
 
 def serialRead():
-    t = serial.Serial('/dev/ttyUSB1',9600)
+    t = serial.Serial('/dev/ttyUSB0',9600)
     print t.isOpen()
     with t:
         while(1):
@@ -37,6 +37,8 @@ def serialRead():
                 toYeeLink(394220,s[2:6]) 
             elif s[0]=='H':
                 toYeeLink(394218,s[2:6]) 
+            elif s[0]=='C':
+                toYeeLink(395037,s[2:6]) 
             elif s[0]=='F':
                 pass
 
