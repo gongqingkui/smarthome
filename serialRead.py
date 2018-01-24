@@ -14,7 +14,7 @@ def serialRead():
     with t:
         while(1):
             s = t.readline()
-            print s
+            print "SERIAL READ:",s
             sql =""
             if s[0]=='T':
                 sql = "insert into temperature (date,value) values('%s','%s');"%(time.strftime('%Y-%m-%d %X',time.localtime()),s[2:6])
@@ -22,25 +22,23 @@ def serialRead():
                 sql = "insert into humidity (date,value) values('%s','%s');"%(time.strftime('%Y-%m-%d %X',time.localtime()),s[2:6])
             elif s[0]=='C':
                 sql = "insert into hcho(date,value) values('%s','%s');"%(time.strftime('%Y-%m-%d %X',time.localtime()),s[2:6])
+            
             if sql!="":
-                print sql
                 db1.execute(sql)
-            newDataToYeeLink()
+
+
+            if s[0]=='T':
+                r = newData('temperature')
+                toYeeLink(394220,r[0][1],r[0][2])
+            elif s[0]=='H':
+                r = newData('humidity')
+                toYeeLink(394218,r[0][1],r[0][2])
+            elif s[0]=='C':
+                r = newData('hcho')
+                toYeeLink(395037,r[0][1],r[0][2])
+
             time.sleep(30)
              
-def newDataToYeeLink():
-
-    i = random.randint(1,3)
-    print i
-    if i == 1:
-        r = newData('hcho')
-        toYeeLink(395037,r[0][1],r[0][2])
-    elif i == 2:
-        r = newData('temperature')
-        toYeeLink(394220,r[0][1],r[0][2])
-    elif i == 3:
-        r = newData('humidity')
-        toYeeLink(394218,r[0][1],r[0][2])
        
 def newData(table):
     db2 = db()
@@ -80,13 +78,13 @@ class db:
 def toYeeLink(sensorId,t,value):
     apikey = 'b6984ebdde615e36eda3c7420e4a422b'
     sensorURL = 'http://api.yeelink.net/v1.0/device/350986/sensor/%s/datapoints'%sensorId
-    print sensorURL
+    print "sensorID",sensorId,"T:",t,"Value:",value;
     timeFormat = '%Y-%m-%dT%X'
     timeString = time.strftime(timeFormat,time.localtime())
     #values = {'timestamp':timeString,'value':value}
     values = {'timestamp':t,'value':value}
     jdata = json.dumps(values)
-    print jdata
+    print "JDATA:",jdata
 
     r = urllib2.Request(sensorURL,jdata)
     r.add_header('U-ApiKey',apikey)
